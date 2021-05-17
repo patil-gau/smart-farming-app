@@ -82,7 +82,9 @@ class _SignupPageState extends State<SignupPage> {
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
         alignment: Alignment.center,
+      
         decoration: BoxDecoration(
+            color: Colors.greenAccent,
             borderRadius: BorderRadius.all(Radius.circular(23.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(
@@ -91,14 +93,15 @@ class _SignupPageState extends State<SignupPage> {
                   blurRadius: 5,
                   spreadRadius: 2)
             ],
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xfffbb448), Color(0xfff7892b)])),
+            // gradient: LinearGradient(
+            //     begin: Alignment.centerLeft,
+            //     end: Alignment.centerRight,
+                // colors: [Color(0xfffbb448), Color(0xfff7892b)])
+                ),
         child: Text(
           'Sign up',
           style: TextStyle(
-              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
         ),
       ),
     );
@@ -120,25 +123,26 @@ class _SignupPageState extends State<SignupPage> {
           TextSpan(
             text: 'u',
             style: TextStyle(
-                color: Color(0xffe46b10),
+              // 0xffe46b10
+                color: Colors.greenAccent,
                 fontWeight: FontWeight.bold,
                 fontSize: 40),
           ),
           TextSpan(
             text: 'p',
-            style: TextStyle(color: Color(0xffe46b10), fontSize: 30),
+            style: TextStyle(color:Colors.greenAccent, fontSize: 30),
           ),
           TextSpan(
             text: '?',
-            style: TextStyle(color: Color(0xffe46b10), fontSize: 50),
+            style: TextStyle(color:Colors.greenAccent, fontSize: 50),
           ),
           TextSpan(
             text: '?',
-            style: TextStyle(color: Color(0xffe46b10), fontSize: 30),
+            style: TextStyle(color:Colors.greenAccent, fontSize: 30),
           ),
           TextSpan(
             text: '?',
-            style: TextStyle(color: Color(0xffe46b10), fontSize: 20),
+            style: TextStyle(color:Colors.greenAccent, fontSize: 20),
           ),
         ]),
       );

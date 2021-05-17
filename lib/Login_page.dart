@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                   blurRadius: 5,
                   spreadRadius: 2)
             ],
-            color: Colors.redAccent
+            color: Colors.greenAccent
             // gradient: LinearGradient(
             //     begin: Alignment.centerLeft,
             //     end: Alignment.centerRight,
@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Text(
           'Login',
           style: TextStyle(
-              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
         ),
       ),
     );
@@ -114,14 +114,14 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     CircleAvatar(
-                      backgroundColor: Colors.redAccent,
+                      backgroundColor: Colors.greenAccent,
                       radius: 60.0,
                     ),
                     SizedBox(
                       height: 30.0,
                     ),
                     new Text(
-                      "Login",
+                      "Sign In",
                       style: TextStyle(
                           fontSize: 40.0,
                           fontWeight: FontWeight.bold,
