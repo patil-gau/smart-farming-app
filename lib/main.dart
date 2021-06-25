@@ -33,7 +33,7 @@ class _SplashscreenState extends State<Splashscreen> {
     Timer(
         Duration(seconds: 5),
         () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPage())));
+            context, MaterialPageRoute(builder: (context) => Dashboard())));
   }
 
   @override
