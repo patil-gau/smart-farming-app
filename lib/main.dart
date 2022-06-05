@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smart_agriculture/Dashboard.dart';
-import 'package:smart_agriculture/Login_page.dart';
+import 'localization_service.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   runApp(MyApp());
 }
 
@@ -11,10 +15,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+        translations: LocalizationService(), // your translations
+        locale: LocalizationService()
+            .getCurrentLocale(), // translations will be displayed in that locale
+        fallbackLocale: Locale(
+          'en',
+          'US',
+        ),
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.green,
+          primarySwatch: Colors.teal,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: Splashscreen());
@@ -43,7 +55,7 @@ class _SplashscreenState extends State<Splashscreen> {
         fit: StackFit.expand,
         children: <Widget>[
           Container(
-            decoration: BoxDecoration(color: Colors.greenAccent),
+            decoration: BoxDecoration(color: Colors.teal),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -59,15 +71,18 @@ class _SplashscreenState extends State<Splashscreen> {
                           backgroundColor: Colors.white,
                           radius: 80.0,
                           child: Image.network(
-                            "",
-                          )),
+                              "https://as1.ftcdn.net/v2/jpg/02/01/00/20/1000_F_201002062_b64SFkCSZSJlpj3euq0dwCdU2Z6UKEMl.jpg",
+                              width: 110,
+                              height: 110)),
                       SizedBox(
                         height: 20.0,
                       ),
                       Text(
-                        "FarmInArm",
+                        "Smart Farming",
                         style: TextStyle(
-                            fontSize: 24.0, fontWeight: FontWeight.bold),
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       )
                     ],
                   ),
@@ -80,9 +95,9 @@ class _SplashscreenState extends State<Splashscreen> {
                   children: <Widget>[
                     CircularProgressIndicator(),
                     Padding(padding: EdgeInsets.only(top: 20.0)),
-                    Text("Guided by letzzBuild Team ",
+                    Text("Guided by Dr.S.M.Kori ",
                         style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold)),
                   ],

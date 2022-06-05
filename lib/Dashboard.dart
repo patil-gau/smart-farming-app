@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-// import 'package:video_player/video_player.dart';
-import 'package:flutter_vlc_player/vlc_player.dart';
-import 'package:flutter_vlc_player/vlc_player_controller.dart';
+import 'localization_service.dart';
+import 'package:get/get.dart';
+// import 'package:flutter_vlc_player/vlc_player.dart';
+// import 'package:flutter_vlc_player/vlc_player_controller.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -12,31 +14,32 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  String _streamUrl;
-  VlcPlayerController _vlcViewController;
-  @override
-  void initState() {
-    super.initState();
-    print("stream");
-    _vlcViewController = new VlcPlayerController();
-    _stream();
-  }
+  //this code is there for adding camera module
+  // String _streamUrl;
+  // VlcPlayerController _vlcViewController;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   print("stream");
+  //   _vlcViewController = new VlcPlayerController();
+  //   _stream();
+  // }
 
-  _stream() {
-    print("Button");
-    setState(() {
-      _streamUrl = 'http://192.168.43.209:8080';
-    });
-  }
+  // _stream() {
+  //   print("Button");
+  //   setState(() {
+  //     _streamUrl = 'http://192.168.43.209:8080';
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.teal[700],
         title: Text(
-          "Tomato Plant",
-          style: TextStyle(color: Colors.black),
+          "title".tr,
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
       ),
@@ -70,27 +73,27 @@ class _DashboardState extends State<Dashboard> {
               //             ),
               //           )
               //  :
-              Container(
-                  padding: const EdgeInsets.only(top: 20, bottom: 30),
-                  height: 240,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.grey[200],
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            // color: Colors.orange.shade200,
-                            color: Colors.black12.withOpacity(0.4),
-                            offset: Offset(3, 9),
-                            blurRadius: 12.0,
-                            spreadRadius: 2)
-                      ]),
-                  child: new VlcPlayer(
-                    defaultHeight: 480,
-                    defaultWidth: 640,
-                    url: _streamUrl,
-                    controller: _vlcViewController,
-                    placeholder: Container(),
-                  )),
+              // Container(
+              //     padding: const EdgeInsets.only(top: 20, bottom: 30),
+              //     height: 240,
+              //     decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(5),
+              //         color: Colors.grey[200],
+              //         boxShadow: <BoxShadow>[
+              //           BoxShadow(
+              //               // color: Colors.orange.shade200,
+              //               color: Colors.black12.withOpacity(0.4),
+              //               offset: Offset(3, 9),
+              //               blurRadius: 12.0,
+              //               spreadRadius: 2)
+              //         ]),
+              //     child: new VlcPlayer(
+              //       defaultHeight: 480,
+              //       defaultWidth: 640,
+              //       url: _streamUrl,
+              //       controller: _vlcViewController,
+              //       placeholder: Container(),
+              //     )),
             ],
           ),
         ),
@@ -106,6 +109,7 @@ class ApiData extends StatefulWidget {
 }
 
 class _ApiDataState extends State<ApiData> {
+  String lng;
   double temp_val = 0.0;
   double moisture_val = 0.0;
   double ldr_val = 0.0;
@@ -118,12 +122,11 @@ class _ApiDataState extends State<ApiData> {
   @override
   void initState() {
     super.initState();
+    lng = LocalizationService().getCurrentLang();
     setUpTimedFetch();
-    print("hello");
   }
 
   setUpTimedFetch() {
-    print("fetch");
     Timer.periodic(Duration(seconds: 2), (timer) {
       fetchValues();
     });
@@ -157,12 +160,44 @@ class _ApiDataState extends State<ApiData> {
     return Container(
       child: Column(
         children: [
+          Text(
+            "title".tr,
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Select Language",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Text("       "),
+              new DropdownButton<String>(
+                items: LocalizationService.langs.map((String value) {
+                  return new DropdownMenuItem<String>(
+                    value: value,
+                    child: new Text(value),
+                  );
+                }).toList(),
+                value: this.lng,
+                underline: Container(color: Colors.transparent),
+                isExpanded: false,
+                onChanged: (newVal) {
+                  setState(() {
+                    this.lng = newVal;
+                    LocalizationService().changeLocale(newVal);
+                  });
+                },
+              ),
+            ],
+          ),
           Container(
             padding: const EdgeInsets.only(top: 20, bottom: 30),
             height: 160,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: Colors.grey[200],
+                color: Colors.greenAccent,
                 boxShadow: <BoxShadow>[
                   BoxShadow(
                       // color: Colors.orange.shade200,
@@ -179,21 +214,21 @@ class _ApiDataState extends State<ApiData> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      "Temp",
+                      "Temp".tr,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "Moisture",
+                      "Moisture".tr,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "LDR",
+                      "LDR".tr,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -210,7 +245,7 @@ class _ApiDataState extends State<ApiData> {
                       width: 80,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.greenAccent,
+                        color: Colors.lime,
                       ),
                       child: Text(
                         " $temp_val 'c",
@@ -223,7 +258,7 @@ class _ApiDataState extends State<ApiData> {
                       width: 80,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.greenAccent,
+                        color: Colors.lime,
                       ),
                       child: Text(
                         " $moisture_val",
@@ -236,7 +271,7 @@ class _ApiDataState extends State<ApiData> {
                       width: 70,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.greenAccent,
+                        color: Colors.lime,
                       ),
                       child: Text(
                         "$ldr_val",
@@ -257,7 +292,7 @@ class _ApiDataState extends State<ApiData> {
             height: 160,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: Colors.grey[200],
+                color: Colors.greenAccent,
                 boxShadow: <BoxShadow>[
                   BoxShadow(
                       // color: Colors.orange.shade200,
@@ -274,21 +309,21 @@ class _ApiDataState extends State<ApiData> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      "Fan",
+                      "Fan".tr,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "Motor",
+                      "Pump".tr,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "Light",
+                      "Light".tr,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -302,10 +337,10 @@ class _ApiDataState extends State<ApiData> {
                     Container(
                       padding: const EdgeInsets.all(15),
                       height: 50,
-                      width: 60,
+                      width: 70,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.greenAccent,
+                        color: Colors.orange,
                       ),
                       child: Text(
                         "$fanState",
@@ -318,7 +353,7 @@ class _ApiDataState extends State<ApiData> {
                       width: 60,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.greenAccent,
+                        color: Colors.orange,
                       ),
                       child: Text(
                         "$motorState",
@@ -331,7 +366,7 @@ class _ApiDataState extends State<ApiData> {
                       width: 60,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.greenAccent,
+                        color: Colors.orange,
                       ),
                       child: Text(
                         "$lightState",
