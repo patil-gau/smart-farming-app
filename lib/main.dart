@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           'US',
         ),
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Smart Farming',
         theme: ThemeData(
           primarySwatch: Colors.teal,
           visualDensity: VisualDensity.adaptivePlatformDensity,
