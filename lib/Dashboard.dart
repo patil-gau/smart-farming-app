@@ -6,7 +6,7 @@ import 'localization_service.dart';
 import 'package:get/get.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 // import 'package:flutter_vlc_player/vlc_player.dart';
-// import 'package:flutter_vlc_player/vlc_player_controller.dart';
+import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 class Dashboard extends StatefulWidget {
@@ -16,22 +16,23 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   //this code is there for adding camera module
-  // String _streamUrl;
-  // VlcPlayerController _vlcViewController;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   print("stream");
-  //   _vlcViewController = new VlcPlayerController();
-  //   _stream();
-  // }
+  String _streamUrl;
+  VlcPlayerController _vlcViewController;
+  @override
+  void initState() {
+    super.initState();
+    print("stream");
+    _vlcViewController = new VlcPlayerController.network(
+        'https://media.w3.org/2010/05/sintel/trailer.mp4');
+    _stream();
+  }
 
-  // _stream() {
-  //   print("Button");
-  //   setState(() {
-  //     _streamUrl = 'http://192.168.43.209:8080';
-  //   });
-  // }
+  _stream() {
+    print("Button");
+    setState(() {
+      _streamUrl = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,45 +57,43 @@ class _DashboardState extends State<Dashboard> {
               SizedBox(height: 40),
 
               // Third Container for live streaming
-              //     _streamUrl == null
-              //         ? Container(
-              //             child: Center(
-              //               child: RichText(
-              //                 text: TextSpan(children: [
-              //                   TextSpan(
-              //                     text: 'Stream Closed',
-              //                     style: TextStyle(
-              //                         fontSize: 14.0,
-              //                         fontWeight: FontWeight.bold,
-              //                         color: Colors.white,
-              //                         background: Paint()..color = Colors.red),
-              //                   )
-              //                 ]),
-              //               ),
-              //             ),
-              //           )
-              //  :
-              // Container(
-              //     padding: const EdgeInsets.only(top: 20, bottom: 30),
-              //     height: 240,
-              //     decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(5),
-              //         color: Colors.grey[200],
-              //         boxShadow: <BoxShadow>[
-              //           BoxShadow(
-              //               // color: Colors.orange.shade200,
-              //               color: Colors.black12.withOpacity(0.4),
-              //               offset: Offset(3, 9),
-              //               blurRadius: 12.0,
-              //               spreadRadius: 2)
-              //         ]),
-              //     child: new VlcPlayer(
-              //       defaultHeight: 480,
-              //       defaultWidth: 640,
-              //       url: _streamUrl,
-              //       controller: _vlcViewController,
-              //       placeholder: Container(),
-              //     )),
+              _streamUrl == null
+                  ? Container(
+                      child: Center(
+                        child: RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                              text: 'Stream Closed',
+                              style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  background: Paint()..color = Colors.red),
+                            )
+                          ]),
+                        ),
+                      ),
+                    )
+                  : Container(
+                      height: 240,
+                      width: 450,
+                      padding: const EdgeInsets.only(top: 20, bottom: 30),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.grey[200],
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                // color: Colors.orange.shade200,
+                                color: Colors.black12.withOpacity(0.4),
+                                offset: Offset(3, 9),
+                                blurRadius: 12.0,
+                                spreadRadius: 2)
+                          ]),
+                      child: new VlcPlayer(
+                        aspectRatio: 4 / 3,
+                        controller: _vlcViewController,
+                        placeholder: Container(),
+                      )),
             ],
           ),
         ),
